@@ -1,0 +1,57 @@
+<% include partials/_header %>
+<body>
+    <section class="section">
+        <div class="column is-justify-content-center is-align-items-center" style="max-width: 2000px; margin: 0 auto;">
+            <h1 class="title is-1" style="text-align: center; padding-bottom: 80px;"><%=translation.CONTAINER_LIST%></h1>
+            <% if (messages.err) { %>
+                <div class="alert alert-danger" role="alert">
+                    <p style="text-align: center; color: red;"><%= messages.err %></p>
+                </div>
+                <br>
+            <% } %>
+            <% if (messages.success) { %>
+                <div class="alert alert-danger" role="alert" style="margin: 0 auto; width: 80%;">
+                    <p style="text-align: center; color: green;"><%= messages.success %></p>
+                </div>
+                <br>
+            <% } %>
+            <div class="scrolling-wrapper">
+                <% if(contenedores.length > 0) { %>
+                    <% for(var i=0; i < contenedores.length; i++) { %>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="media">
+                                    <div class="media-content">
+                                    <p class="title is-3"><%= contenedores[i].nombre %></p>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <%= contenedores[i].descripcion %>
+                                    <br><br>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <time style="font-size: small; padding-top: 15px;"><%=translation.CREATION_DATE%>: <%= (new Date(contenedores[i].fechaCreacion)).toLocaleDateString() %></time>
+                                        <div>
+                                            <a class="button is-link" href="/contenedor/<%= contenedores[i]._id %>?clang=<%= lang %>"><%=translation.CHECK%></a>
+                                            <a class="button is-primary" href="/contenedor/update/<%= contenedores[i]._id %>?clang=<%= lang %>"><%=translation.UPDATE%></a>
+                                            <a class="button is-danger" href="/contenedor/delete/<%= contenedores[i]._id %>"><%=translation.DELETE%></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } else { %>
+                    <div style="text-align: center; padding: 30px;">
+                        <p style="font-weight: bold; font-size: large;"><%=translation.NO_CONTAINERS%></p>
+                    </div>
+                <% } %>  
+                <% if(contenedores.length < 5) { %>
+                <div style="text-align: center; padding-top: 30px;">
+                    <a class="button is-primary" style="font-size: large;" href="/contenedores/nuevo?clang=<%= lang %>"><%=translation.ADD%></a>
+                </div>  
+                <% } %>         
+            </div>
+        </div>    
+    </section>
+    <% include partials/_footer %>
+</body>

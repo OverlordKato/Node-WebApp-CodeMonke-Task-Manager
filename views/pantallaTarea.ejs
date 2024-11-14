@@ -1,0 +1,29 @@
+<% include partials/_header %>
+<body>
+    <section class="section">
+        <div class="column is-justify-content-center is-align-items-center" style="max-width: 500px; margin: 0 auto;">
+            <div class="box" style="margin: 0 auto; width: 80%;">
+                <p style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.NAME%></p>
+                <p style="font-size:large"><%=tareaView.nombre%></p>
+                <hr>
+                <p style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.DESCRIPTION%></p>
+                <p style="font-size:large"><%=tareaView.descripcion%></p>
+                <hr>
+                <% if(tareaView.etiquetas.length > 0) { %>
+                    <p style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.HASHTAGS%></p>
+                    <% for(var i=0; i < tareaView.etiquetas.length; i++) { %><!--Muestra todas las etiquetas separadas por una coma. Todo debe estar en la misma línea para mostrar comas y espacios correctamente-->
+                        <span style="font-size: large;"><%= tareaView.etiquetas[i].toString() %></span><% if (i < tareaView.etiquetas.length - 1) { %>,&nbsp<% } %>
+                    <% } %>
+                    <hr>
+                <% } %>
+                <p style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.CREATION_DATE%></p>
+                <time style="font-size: large; padding-top: 15px;"><%= (new Date(tareaView.fechaCreacion)).toLocaleDateString() %></time>
+            </div>
+            <br>
+            <div class="box is-flex is-justify-content-center" style="max-width: 100px; margin: 0 auto; width: 80%;">
+                <a class="button is-primary" href="/contenedor/<%= contenedor._id %>?clang=<%= lang %>"><%=translation.BACK%></a>
+            </div>
+        </div>    
+    </section>
+    <% include partials/_footer %>
+</body>

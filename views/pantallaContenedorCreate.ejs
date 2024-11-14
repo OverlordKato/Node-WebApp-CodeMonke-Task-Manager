@@ -1,0 +1,27 @@
+<% include partials/_header %>
+<body>
+    <section class="section">
+        <div class="column is-justify-content-center is-align-items-center" style="max-width: 200px; margin: 0 auto;"></div>
+            <form action="/contenedor/create" method="post">
+                <div class="box" style="margin: 0 auto; width: 80%;">
+                    <label style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.NAME%><p style="font-style: italic; font-size: small; opacity: 0.33; display: inline;">&nbsp; (max. 27)</p></label>
+                    <input class="input" type="text" name="nombre" style="width: 100%;" maxlength="27" required>
+                    <hr>
+                    <label style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.DESCRIPTION%><p style="font-style: italic; font-size: small; opacity: 0.33; display: inline;">&nbsp; (max. 255)</p></label>
+                    <input class="input" type="text" name="descripcion" style="width: 100%;" maxlength="255" required>
+                    <hr>
+                    <div class="is-flex is-justify-content-flex-start" style="margin-top: 20px;">
+                        <button type="submit" class="button is-info" style="margin-right: 10px;"><%=translation.CONFIRM%></button>
+                        <a class="button is-primary" href="/usuario?clang=<%= lang %>"><%=translation.BACK%></a>
+                    </div>
+                </div>
+            </form>
+            <% if (messages.err) { %>
+                <div class="alert alert-danger" role="alert" style="margin: 0 auto; width: 80%;">
+                    <p style="text-align: center; color: red;"><%= messages.err %></p>
+                </div>
+            <% } %>
+        </div>    
+    </section>
+    <% include partials/_footer %>
+</body>

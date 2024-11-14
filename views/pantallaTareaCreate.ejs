@@ -1,0 +1,25 @@
+<% include partials/_header %>
+<body>
+    <section class="section">
+        <div class="column is-justify-content-center is-align-items-center" style="max-width: 500px; margin: 0 auto;"></div>
+            <form action="/tarea/create/<%= contenedor._id %>" method="post">
+                <div class="box" style="margin: 0 auto; width: 80%;">
+                    <label style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.NAME%><p style="font-style: italic; font-size: small; opacity: 0.33; display: inline;">&nbsp; (max. 27)</p></label>
+                    <input class="input" type="text" name="nombre" style="width: 100%;" maxlength="27" required>
+                    <hr>
+                    <label style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.DESCRIPTION%><p style="font-style: italic; font-size: small; opacity: 0.33; display: inline;">&nbsp; (max. 255)</p></label>
+                    <input class="input" type="text" name="descripcion" style="width: 100%;" maxlength="255" required>
+                    <hr>
+                    <label style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.HASHTAGS%><p style="font-style: italic; font-size: small; opacity: 0.33; display: inline;">&nbsp; (<%=translation.HASHTAG_LIMITS%>)</p></label>
+                    <input class="input" type="text" name="hashtags" style="width: 100%;" maxlength="54" required>
+                    <hr>
+                    <div class="is-flex is-justify-content-flex-start" style="margin-top: 20px;">
+                        <button type="submit" class="button is-info" style="margin-right: 10px;"><%=translation.CONFIRM%></button>
+                        <a class="button is-primary" href="/contenedor/<%= contenedor._id %>?clang=<%= lang %>"><%=translation.BACK%></a>
+                    </div>
+                </div>
+            </form>
+        </div>    
+    </section>
+    <% include partials/_footer %>
+</body>

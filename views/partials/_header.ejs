@@ -1,0 +1,145 @@
+<!--
+Copyright 2024 Bulma
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<head>
+  <title>TFG-NodeJS</title>
+  <!--Se importa Bulma aquí, el header se aplica a todas las vistas-->
+  <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
+  >
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" href="/images/logoTFG.png" type="image/x-icon" />
+  <style>
+      body {
+          color: white;
+          position: relative;
+          padding-bottom: 100px;
+      }
+      .card:hover {
+        background-color: #f5f5f50c;
+      }
+      .dropdown-pers {
+        width: 50%; 
+        text-align: center; 
+      }
+      .footer {
+        position: absolute; 
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+      }
+  </style>
+</head>
+<body>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/?clang=<%= lang %>">
+      <img src="/images/logoTFG.png"/>
+    </a>
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarTFG">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+    <div class="navbar-menu" id="navbarTFG">
+      <div class="navbar-start">
+        <div class="navbar-item">
+          <div class="buttons">
+              <!--Botones de navegación, aparecen en función de si hay un usuario signed in o no-->
+              <% if (!user) { %>
+              <a class="button is-primary" href="/signup?clang=<%= lang %>"><!--Se aplica el idioma de sesión a la ruta-->
+                <strong><%= translation.SIGN_UP %></strong>
+              </a>
+              <a class="button is-info" href="/?clang=<%= lang %>"><!--Se aplica el idioma de sesión a la ruta-->
+                  <strong><%= translation.SIGN_IN %></strong>
+              </a>
+              <% } else { %>
+              <a class="button is-primary" href="/usuario?clang=<%= lang %>"><!--Se aplica el idioma de sesión a la ruta-->
+                <strong><%=translation.CONTAINER_LIST%></strong>
+              </a>
+              <a class="button is-info" href="/usuario/perfil?clang=<%= lang %>"><!--Se aplica el idioma de sesión a la ruta-->
+                <strong><%=translation.PROFILE%></strong>
+              </a>
+              <% } %>
+
+              <!--Menú de cambio de idiomas-->
+              <div class="dropdown">
+                <div class="dropdown-toggle">
+                  <button class="button is-light" onclick="this.parentNode.parentNode.classList.toggle('is-active')" aria-haspopup="true" aria-controls="dropdown-menu"><!--Sacado de la siguiente página, con parentNode en vez de parentElement: https://stackoverflow.com/questions/44608951/toggle-class-of-parent-element-onclick-without-jquery--><span><%=translation.LANGUAGES%></span>
+                    <span class="icon is-small">
+                      <span aria-hidden="true"><i class="fa-solid fa-angle-down"></i></span><!--Cambio del icono del desplegable a uno más elegante-->
+                    </span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+                  <div class="dropdown-content dropdown-pers">
+                    <a class="<%=(lang=='es'?'active':'')%>" href="?clang=es"><!--Cambia el idioma de sesión a español-->
+                      <img src="/images/Espania.png" alt="Español">
+                    </a>
+                    <hr class="dropdown-divider" />
+                    <a class="<%=(lang=='en'?'active':'')%>" href="?clang=en"><!--Cambia el idioma de sesión a inglés-->
+                      <img src="/images/UK.png" alt="Inglés">
+                    </a>
+                    <hr class="dropdown-divider" />
+                    <a class="<%=(lang=='fr'?'active':'')%>" href="?clang=fr"><!--Cambia el idioma de sesión a francés-->
+                      <img src="/images/Francia.png" alt="Francés">
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <% if (messages.route) { %>
+                <div class="alert alert-danger" role="alert">
+                    <p style="text-align: center; color: red;"><%= messages.route %></p>
+                </div>
+              <% } %>
+          </div>
+        </div>
+      </div>
+
+      <% if (user) { %>
+      <div class="navbar-end">
+        <div class="buttons">
+          <a class="button is-danger" style="margin-right: 20px; margin-left: 12px;" href="/logout">
+            <strong><%=translation.LOGOUT%></strong>
+          </a>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</nav>
+</body>
+
+<!--Script sacado de la página de Bulma: https://bulma.io/documentation/components/dropdown/ -->
+<!--Permite el funcionamiento del navBurger-->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+    // Add a click event on each of them
+    $navbarBurgers.forEach( el => {
+      el.addEventListener('click', () => {
+
+        // Get the target from the "data-target" attribute
+        const target = el.dataset.target;
+        const $target = document.getElementById(target);
+
+        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+        el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+      });
+    });
+  });
+</script>

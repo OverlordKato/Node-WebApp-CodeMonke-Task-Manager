@@ -1,0 +1,33 @@
+<% include partials/_header %>
+<html class="has-background-dark">
+<body>
+    <section class="section">
+        <div class="column is-justify-content-center is-align-items-center" style="max-width: 500px; margin: 0 auto;">
+            <form action="/signin" method="POST"> <!--Sin acción de momento, es un placeholder-->
+                <div class="field">
+                    <label class="label"><%=translation.EMAIL%><p style="font-style: italic; font-size: smaller; opacity: 0.33; display: inline;">&nbsp; (max. 80)</p></label>
+                    <div class="control">
+                        <input class="input" type="email" name="email" placeholder="e.g. ugandanchief@example.ug" maxlength="80" required><!--Añadido "name" para que la aplicación encuentre el input del usuario-->
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label"><%=translation.PASSWORD%></label>
+                    <div class="control">
+                        <input class="input" type="password" name="password" minlength="1" required><!--Añadido "name" para que la aplicación encuentre el input del usuario-->
+                    </div>
+                </div>
+
+                <button class="button is-light" type="submit">
+                    <strong><%=translation.SIGN_IN%></strong>
+                </button>
+            </form>
+            <% if (messages.err) { %>
+                <div class="alert alert-danger" role="alert">
+                    <p style="text-align: center; color: red;"><%= messages.err %></p>
+                </div>
+            <% } %>
+        </div>
+    </section>
+    <% include partials/_footer %>
+</body>

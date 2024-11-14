@@ -1,0 +1,68 @@
+<% include partials/_header %>
+<html class="has-background-dark">
+<body>
+    <section class="section">
+        <div class="column is-justify-content-center is-align-items-center" style="max-width: 500px; margin: 0 auto;">
+            <form action="/signup" method="POST"> 
+                <div class="field">
+                    <label class="label"><%=translation.ALIAS%><p style="font-style: italic; font-size: smaller; opacity: 0.33; display: inline;">&nbsp; (max. 27)</p></label>
+                    <div class="control">
+                        <input class="input" type="text" name="aliasUsuario" placeholder="e.g Alex Smith" maxlength="27" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label"><%=translation.EMAIL%><p style="font-style: italic; font-size: smaller; opacity: 0.33; display: inline;">&nbsp; (max. 80)</p></label>
+                    <div class="control">
+                        <input class="input" type="email" name="email" placeholder="e.g. alexsmith@gmail.com" maxlength="80" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label"><%=translation.PASSWORD%></label>
+                    <div class="control">
+                        <input class="input" type="password" name="password" minlength="1" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label"><%=translation.REPEAT_PASSWORD%></label>
+                    <div class="control">
+                        <input class="input" type="password" name="password2" minlength="1" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label"><%=translation.NAME%><p style="font-style: italic; font-size: smaller; opacity: 0.33; display: inline;">&nbsp; (max. 50)</p></label>
+                    <div class="control">
+                        <input class="input" type="text" name="nombre" maxlength="50" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label"><%=translation.LAST_NAME1%><p style="font-style: italic; font-size: smaller; opacity: 0.33; display: inline;">&nbsp; (max. 80)</p></label>
+                    <div class="control">
+                        <input class="input" type="text" name="apellido1" maxlength="80" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label"><%=translation.LAST_NAME2%><p style="font-style: italic; font-size: smaller; opacity: 0.33; display: inline;">&nbsp; (max. 80)</p></label>
+                    <div class="control">
+                        <input class="input" type="text" name="apellido2" maxlength="80">
+                    </div>
+                </div>
+
+                <button class="button is-light" type="submit">
+                    <strong><%=translation.SIGN_UP%></strong>
+                </button>
+            </form>
+            <% if (messages.err) { %>
+                <div class="alert alert-danger" role="alert">
+                    <p style="text-align: center; color: red;"><%= messages.err %></p>
+                </div>
+            <% } %>
+        </div>
+    </section>
+    <% include partials/_footer %>
+</body>

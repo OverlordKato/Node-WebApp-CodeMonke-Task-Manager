@@ -1,0 +1,36 @@
+<% include partials/_header %>
+<body>
+    <section class="section">
+        <div class="column is-justify-content-center is-align-items-center" style="max-width: 500px; margin: 0 auto;">
+            <form action="/usuario/edit/datos" method="post">
+                <div class="box" style="margin: 0 auto; width: 80%;">
+                    <label style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.ALIAS%><p style="font-style: italic; font-size: small; opacity: 0.33; display: inline;">&nbsp; (max. 27)</p></label>
+                    <input class="input" type="text" name="aliasUsuario" value="<%=UsuarioEditDatos.aliasUsuario%>" style="width: 100%;" maxlength="27" required>
+                    <hr>
+                    <label style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.EMAIL%><p style="font-style: italic; font-size: small; opacity: 0.33; display: inline;">&nbsp; (max. 80)</p></label>
+                    <input class="input" type="email" name="email" value="<%=UsuarioEditDatos.email%>" style="width: 100%;" maxlength="80" required>
+                    <hr>
+                    <label style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.NAME%><p style="font-style: italic; font-size: small; opacity: 0.33; display: inline;">&nbsp; (max. 50)</p></label>
+                    <input class="input" type="text" name="nombre" value="<%=UsuarioEditDatos.nombre%>" style="width: 100%;" maxlength="50" required>
+                    <hr>
+                    <label style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.LAST_NAME1%><p style="font-style: italic; font-size: small; opacity: 0.33; display: inline;">&nbsp; (max. 80)</p></label>
+                    <input class="input" type="text" name="apellido1" value="<%=UsuarioEditDatos.apellido1%>" style="width: 100%;" maxlength="80" required>
+                    <hr>
+                    <label style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.LAST_NAME2%><p style="font-style: italic; font-size: small; opacity: 0.33; display: inline;">&nbsp; (max. 80)</p></label>
+                    <input class="input" type="text" name="apellido2" value="<%=UsuarioEditDatos.apellido2%>" style="width: 100%;" maxlength="80">
+                    <hr>
+                    <div class="is-flex is-justify-content-flex-start" style="margin-top: 20px;">
+                        <button type="submit" class="button is-info" style="margin-right: 10px;"><%=translation.CONFIRM%></button>
+                        <a class="button is-primary" href="/usuario/perfil?clang=<%= lang %>"><%=translation.BACK%></a>
+                    </div>
+                </div>
+            </form>
+            <% if (messages.err) { %>
+                <div class="alert alert-danger" role="alert" style="margin: 0 auto; width: 80%;">
+                    <p style="text-align: center; color: red;"><%= messages.err %></p>
+                </div>
+            <% } %>
+        </div>    
+    </section>
+    <% include partials/_footer %>
+</body>

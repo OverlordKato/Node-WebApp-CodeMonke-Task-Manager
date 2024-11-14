@@ -1,0 +1,272 @@
+<% include partials/_header %>
+<body>  
+    <section class="section">
+        <% if (messages.err) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= messages.err %>
+            </div>
+        <% } %>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <a class="button is-primary is-dark is-large" style="vertical-align: middle;" href="/tareas/nueva/<%= contenedor._id %>?clang=<%= lang %>">
+                <strong><%= translation.ADD_TASK %></strong>
+            </a>
+        </div>
+        <% if (messages.success) { %>
+            <div class="alert alert-danger" role="alert" style="margin: 0 auto; width: 80%;">
+                <p style="text-align: center; color: green; padding-top: 20px;"><%= messages.success %></p>
+            </div>
+        <% } %>
+        <br><br>
+        <div class="columns is-justify-content-center" style="display: flex;">
+            <div style="width: 310px; min-width: 310px; margin: 10px;">
+                <p class="title is-4" style="text-align: center;"><%=translation.TO_DO%></p>
+                <div class="column dropzone" id="todo" style="border-style: solid; border-width: 2px; border-color: rgba(255, 255, 255, 0.404); border-radius: 15px; max-height: 600px; overflow-y: auto;">
+                    <div class="scrolling-wrapper">
+                        <% var seguir = false; %>
+                        <% for(var i=0; i < tareas.length; i++) { %>
+                            <% if(tareas[i].estado == "Pendiente") { %>
+                                <% seguir = true; %>
+                                <div class="card" id="<%= tareas[i]._id %>">
+                                    <div class="card-content">
+                                        <div class="content" style="display: flex; justify-content: space-between;">
+                                            <div>
+                                                <div class="media">
+                                                    <div class="media-content">
+                                                        <% if(tareas[i].nombre.length > 14 && !tareas[i].nombre.substring(0, 14).includes(' ')) { %><!--Fuerza un br si el nombre de la tarea es largo y sin espacios, evita que se rompa visualmente-->
+                                                            <p style="font-size: larger; font-weight: bold;"><%= tareas[i].nombre.substring(0, 14) %><br><%= tareas[i].nombre.substring(14) %></p>
+                                                        <% } else { %>
+                                                            <p style="font-size: larger; font-weight: bold;"><%= tareas[i].nombre %></p>
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                                <% for(var j=0; j < tareas[i].etiquetas.length; j++) { %>
+                                                    <a style="font-size: smaller;">#<%= tareas[i].etiquetas[j].toString() %></a><br><!--La etiquetas tendrán 20 caracteres máximo, encajan sin forzar br como en los nombres-->
+                                                <% } %>
+                                            </div>
+                                            <div>
+                                                <a class="button is-link" style="color: rgb(0, 0, 0); margin-bottom: 10px;" href="/tarea/view/<%= tareas[i]._id %>/<%= contenedor._id %>?clang=<%= lang %>"><i class="fas fa-magnifying-glass"></i></a><br>
+                                                <a class="button is-success" style="margin-bottom: 10px;" href="/tarea/edit/<%= tareas[i]._id %>/<%= contenedor._id %>?clang=<%= lang %>"><i class="fa-solid fa-pen-to-square"></i></a><br>
+                                                <a class="button is-danger" href="/tarea/delete/<%= tareas[i]._id %>/<%= contenedor._id %>?clang=<%= lang %>"><i class="fas fa-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                        <% } %>
+                        <% if(!seguir) { %>
+                            <div style="text-align: center; padding: 30px;">
+                                <p style="font-weight: bold; font-size: large;"><%=translation.NO_TASKS%></p>
+                            </div>
+                        <% } %>         
+                    </div>
+                </div>    
+            </div>
+            <div style="width: 310px; min-width: 290px; margin: 10px;">
+                <p class="title is-4" style="text-align: center;"><%=translation.ON_HOLD%></p>
+                <div class="column dropzone" id="onhold" style="border-style: solid; border-width: 2px; border-color: rgba(255, 255, 255, 0.404); border-radius: 15px; max-height: 600px; overflow-y: auto;">
+                    <div class="scrolling-wrapper">
+                        <% var seguir = false; %>
+                        <% for(var i=0; i < tareas.length; i++) { %>
+                            <% if(tareas[i].estado == "En espera") { %>
+                                <% seguir = true; %>
+                                <div class="card" id="<%= tareas[i]._id %>">
+                                    <div class="card-content">
+                                        <div class="content" style="display: flex; justify-content: space-between;">
+                                            <div>
+                                                <div class="media">
+                                                    <div class="media-content">
+                                                        <% if(tareas[i].nombre.length > 14 && !tareas[i].nombre.substring(0, 14).includes(' ')) { %><!--Fuerza un br si el nombre de la tarea es largo y sin espacios, evita que se rompa visualmente-->
+                                                            <p style="font-size: larger; font-weight: bold;"><%= tareas[i].nombre.substring(0, 14) %><br><%= tareas[i].nombre.substring(14) %></p>
+                                                        <% } else { %>
+                                                            <p style="font-size: larger; font-weight: bold;"><%= tareas[i].nombre %></p>
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                                <% for(var j=0; j < tareas[i].etiquetas.length; j++) { %>
+                                                    <a style="font-size: smaller;">#<%= tareas[i].etiquetas[j].toString() %></a><br><!--La etiquetas tendrán 20 caracteres máximo, encajan sin forzar br como en los nombres-->
+                                                <% } %>
+                                            </div>
+                                            <div>
+                                                <a class="button is-link" style="color: rgb(0, 0, 0); margin-bottom: 10px;" href="/tarea/view/<%= tareas[i]._id %>/<%= contenedor._id %>?clang=<%= lang %>"><i class="fas fa-magnifying-glass"></i></a><br>
+                                                <a class="button is-success" style="margin-bottom: 10px;" href="/tarea/edit/<%= tareas[i]._id %>/<%= contenedor._id %>?clang=<%= lang %>"><i class="fa-solid fa-pen-to-square"></i></a><br>
+                                                <a class="button is-danger" href="/tarea/delete/<%= tareas[i]._id %>/<%= contenedor._id %>?clang=<%= lang %>"><i class="fas fa-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                        <% } %>
+                        <% if(!seguir) { %>
+                            <div style="text-align: center; padding: 30px;">
+                                <p style="font-weight: bold; font-size: large;"><%=translation.NO_TASKS%></p>
+                            </div>
+                        <% } %>         
+                    </div>
+                </div>    
+            </div>
+            <div style="width: 310px; min-width: 290px; margin: 10px;">
+                <p class="title is-4" style="text-align: center;"><%=translation.IN_PROGRESS%></p>
+                <div class="column dropzone" id="inprogress" style="border-style: solid; border-width: 2px; border-color: rgba(255, 255, 255, 0.404); border-radius: 15px; max-height: 600px; overflow-y: auto;">
+                    <div class="scrolling-wrapper">
+                        <% var seguir = false; %>
+                        <% for(var i=0; i < tareas.length; i++) { %>
+                            <% if(tareas[i].estado == "En progreso") { %>
+                                <% seguir = true; %>
+                                <div class="card" id="<%= tareas[i]._id %>">
+                                    <div class="card-content">
+                                        <div class="content" style="display: flex; justify-content: space-between;">
+                                            <div>
+                                                <div class="media">
+                                                    <div class="media-content">
+                                                        <% if(tareas[i].nombre.length > 14 && !tareas[i].nombre.substring(0, 14).includes(' ')) { %><!--Fuerza un br si el nombre de la tarea es largo y sin espacios, evita que se rompa visualmente-->
+                                                            <p style="font-size: larger; font-weight: bold;"><%= tareas[i].nombre.substring(0, 14) %><br><%= tareas[i].nombre.substring(14) %></p>
+                                                        <% } else { %>
+                                                            <p style="font-size: larger; font-weight: bold;"><%= tareas[i].nombre %></p>
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                                <% for(var j=0; j < tareas[i].etiquetas.length; j++) { %>
+                                                    <a style="font-size: smaller;">#<%= tareas[i].etiquetas[j].toString() %></a><br><!--La etiquetas tendrán 20 caracteres máximo, encajan sin forzar br como en los nombres-->
+                                                <% } %>
+                                            </div>
+                                            <div>
+                                                <a class="button is-link" style="color: rgb(0, 0, 0); margin-bottom: 10px;" href="/tarea/view/<%= tareas[i]._id %>/<%= contenedor._id %>?clang=<%= lang %>"><i class="fas fa-magnifying-glass"></i></a><br>
+                                                <a class="button is-success" style="margin-bottom: 10px;" href="/tarea/edit/<%= tareas[i]._id %>/<%= contenedor._id %>?clang=<%= lang %>"><i class="fa-solid fa-pen-to-square"></i></a><br>
+                                                <a class="button is-danger" href="/tarea/delete/<%= tareas[i]._id %>/<%= contenedor._id %>?clang=<%= lang %>"><i class="fas fa-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                        <% } %>
+                        <% if(!seguir) { %>
+                            <div style="text-align: center; padding: 30px;">
+                                <p style="font-weight: bold; font-size: large;"><%=translation.NO_TASKS%></p>
+                            </div>
+                        <% } %>         
+                    </div>
+                </div>    
+            </div>
+            <div style="width: 310px; min-width: 290px; margin: 10px;">
+                <p class="title is-4" style="text-align: center;"><%=translation.COMPLETED%></p>
+                <div class="column dropzone" id="completed" style="border-style: solid; border-width: 2px; border-color: rgba(255, 255, 255, 0.404); border-radius: 15px; max-height: 600px; overflow-y: auto;">
+                    <div class="scrolling-wrapper">
+                        <% var seguir = false; %>
+                        <% for(var i=0; i < tareas.length; i++) { %>
+                            <% if(tareas[i].estado == "Completado") { %>
+                                <% seguir = true; %>
+                                <div class="card" id="<%= tareas[i]._id %>">
+                                    <div class="card-content">
+                                        <div class="content" style="display: flex; justify-content: space-between;">
+                                            <div>
+                                                <div class="media">
+                                                    <div class="media-content">
+                                                        <% if(tareas[i].nombre.length > 14 && !tareas[i].nombre.substring(0, 14).includes(' ')) { %><!--Fuerza un br si el nombre de la tarea es largo y sin espacios, evita que se rompa visualmente-->
+                                                            <p style="font-size: larger; font-weight: bold;"><%= tareas[i].nombre.substring(0, 14) %><br><%= tareas[i].nombre.substring(14) %></p>
+                                                        <% } else { %>
+                                                            <p style="font-size: larger; font-weight: bold;"><%= tareas[i].nombre %></p>
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                                <% for(var j=0; j < tareas[i].etiquetas.length; j++) { %>
+                                                    <a style="font-size: smaller;">#<%= tareas[i].etiquetas[j].toString() %></a><br><!--La etiquetas tendrán 20 caracteres máximo, encajan sin forzar br como en los nombres-->
+                                                <% } %>
+                                            </div>
+                                            <div>
+                                                <a class="button is-link" style="color: rgb(0, 0, 0); margin-bottom: 10px;" href="/tarea/view/<%= tareas[i]._id %>/<%= contenedor._id %>?clang=<%= lang %>"><i class="fas fa-magnifying-glass"></i></a><br>
+                                                <a class="button is-success" style="margin-bottom: 10px;" href="/tarea/edit/<%= tareas[i]._id %>/<%= contenedor._id %>?clang=<%= lang %>"><i class="fa-solid fa-pen-to-square"></i></a><br>
+                                                <a class="button is-danger" href="/tarea/delete/<%= tareas[i]._id %>/<%= contenedor._id %>?clang=<%= lang %>"><i class="fas fa-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                        <% } %>
+                        <% if(!seguir) { %>
+                            <div style="text-align: center; padding: 30px;">
+                                <p style="font-weight: bold; font-size: large;"><%=translation.NO_TASKS%></p>
+                            </div>
+                        <% } %>         
+                    </div>
+                </div>    
+            </div>
+        </div>
+        <!--https://www.geeksforgeeks.org/bulma-dropup/-->
+        <script> 
+            var triggers = document.querySelectorAll( 
+                ".dropdown .dropdown-trigger"); 
+            triggers.forEach(function (trigger) { 
+                var isopen = false; 
+                trigger.addEventListener('click', function(){ 
+                    if(isopen){ 
+                        trigger.parentElement.classList.remove("is-active"); 
+                        isopen = false; 
+                    }else{ 
+                        trigger.parentElement.classList.add("is-active"); 
+                        isopen = true; 
+                    } 
+                }) 
+            }); 
+        </script> 
+
+        <!--Para el siguiente script se han utilizado las siguientes páginas para aprender a crear la funcionalidad kanban:
+        https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API
+        https://www.w3schools.com/html/html5_draganddrop.asp
+        https://www.geeksforgeeks.org/html-drag-and-drop/
+        https://www.digitalocean.com/community/tutorials/how-to-use-the-javascript-fetch-api-to-get-data-es
+        https://www.freecodecamp.org/espanol/news/tutorial-de-fetch-api-en-javascript-con-ejemplos-de-js-fetch-post-y-header/--> 
+        <script>
+            document.addEventListener("DOMContentLoaded", function kanban() {
+                var tarjetas = document.querySelectorAll(".card");// Selecciona todos los elementos card
+                var dropzones = document.querySelectorAll(".dropzone");// Selecciona todos los elementos dropzone
+
+                tarjetas.forEach(function arrastrarTarjetas(tarjeta) {
+                    tarjeta.setAttribute("draggable", "true");// Hace que las tarjetas sean arrastrables
+                    tarjeta.addEventListener("dragstart", function setDatosArrastrarTarjetas(ev) {// Almacena el id de la tarjeta en datatransfer al empezar a moverla
+                        ev.dataTransfer.setData("text/plain", ev.target.id);
+                    });
+                });
+
+                dropzones.forEach(function propiedadesDropzones(dropzone) {
+                    dropzone.addEventListener("dragover", function arrastrarEncima(ev) {// Evita que no se puedan mover tarjetas encima de las dropzones
+                        ev.preventDefault();
+                    });
+
+                    dropzone.addEventListener("drop", function dejarTarjeta(ev) {// Evento al soltar la tarjeta, se detalla más en cada línea
+                        ev.preventDefault();// Evita que no se puedan soltar tarjetas en las dropzones
+                        var idTarjeta = ev.dataTransfer.getData("text/plain");// Se asigna el id almacenado antes en datatransfer a una variable
+                        var idDropzone = ev.currentTarget.id;// Se asigna el id de la dropzone en la que se suelta la tarjeta a una variable
+                        var tarjeta = document.getElementById(idTarjeta);// Se asigna el id de la tarjeta que se suelta en la dropzone en una variable
+                        var estadoActualizado = "";// Se inicializa una variable para almacenar el estado actualizado de la tarjeta
+
+                        // Bloque if/else para determinar el estado actualizado de la tarjeta, que corresponderá al id de la dropzone
+                        if (idDropzone === "todo") {
+                            estadoActualizado = "Pendiente";
+                        } 
+                        else if (idDropzone === "onhold") {
+                            estadoActualizado = "En espera";
+                        } 
+                        else if (idDropzone === "inprogress") {
+                            estadoActualizado = "En progreso";
+                        } 
+                        else if (idDropzone === "completed") {
+                            estadoActualizado = "Completado";
+                        }
+
+                        // Enviamos un post, existente en las rutas de tareas, al servidor gracias a fetch, con la información necesaria
+                        fetch('/tarea/kanban/' + idTarjeta, {
+                            method: 'POST',
+                            body: JSON.stringify({ estado: estadoActualizado }),
+                            headers: {'Content-type': 'application/json'}
+                        })
+                        .then(window.location.reload())// Recarga la página tras ejecutar el post
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                    });
+                });
+            });
+        </script>
+    </section>    
+    <% include partials/_footer %>
+</body>

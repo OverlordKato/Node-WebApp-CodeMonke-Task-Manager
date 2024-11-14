@@ -1,0 +1,41 @@
+<% include partials/_header %>
+<body>
+    <section class="section">
+        <div class="column is-justify-content-center is-align-items-center" style="max-width: 500px; margin: 0 auto;">
+            <div class="box" style="margin: 0 auto; width: 80%;">
+                <p style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.ALIAS%></p>
+                <p style="font-size:large"></p><%=UsuarioActual.aliasUsuario%></p>
+                <hr>
+                <p style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.EMAIL%></p>
+                <p style="font-size:large"><%=UsuarioActual.email%></p>
+                <hr>
+                <p style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.NAME%></p>
+                <p style="font-size:large"><%=UsuarioActual.nombre%></p>
+                <hr>
+                <p style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.LAST_NAME1%></p>
+                <p style="font-size:large"><%=UsuarioActual.apellido1%></p>
+                <% if(UsuarioActual.apellido2){ %>
+                    <hr>
+                    <p style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.LAST_NAME2%></p>
+                    <p style="font-size:large"><%=UsuarioActual.apellido2%></p>
+                <% } %> 
+            </div>
+            <br>
+            <% if (messages.success) { %>
+                <div class="alert alert-danger" role="alert" style="margin: 0 auto; width: 80%;">
+                    <p style="text-align: center; color: green;"><%= messages.success %></p>
+                </div>
+                <br>
+            <% } %>
+            <div class="box is-flex is-justify-content-space-between" style="max-width: 500px; margin: 0 auto; width: 80%; min-width: 400px;">
+                <a class="button is-primary" href="/usuario/edit/datos?clang=<%= lang %>"><%=translation.CHANGE_PROFILE%></a><!--Se construye la ruta con el lang de la session-->
+                <a class="button is-info" href="/usuario/edit/pass?clang=<%= lang %>"><%=translation.CHANGE_PASSWORD%></a><!--Se construye la ruta con el lang de la session-->
+            </div>
+            <br>
+            <div class="box is-flex is-justify-content-center" style="max-width: 200px; margin: 0 auto; width: 80%;">
+                <a class="button is-danger" href="/usuario/comprobacion?clang=<%= lang %>"><%=translation.DELETE_ACCOUNT%></a>
+            </div>
+        </div>    
+    </section>
+    <% include partials/_footer %>
+</body>

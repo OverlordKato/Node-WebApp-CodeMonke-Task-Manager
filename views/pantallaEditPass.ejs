@@ -1,0 +1,30 @@
+<% include partials/_header %>
+<body>
+    <section class="section">
+        <div class="column is-justify-content-center is-align-items-center" style="max-width: 500px; margin: 0 auto;">
+            <form action="/usuario/edit/pass" method="post">
+                <div class="box" style="margin: 0 auto; width: 80%;">
+                    <label style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.CURRENT_PASSWORD%></label>
+                    <input class="input" type="password" name="passActual" style="width: 100%;" minlength="1" required>
+                    <hr>
+                    <label style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.NEW_PASSWORD%></label>
+                    <input class="input" type="password" name="passNuevo" style="width: 100%;" minlength="1" required>
+                    <hr>
+                    <label style="font-size:x-large; font-weight: bolder; color: white;"><%=translation.REPEAT_NEW_PASSWORD%></label>
+                    <input class="input" type="password" name="passNuevoRepetir" style="width: 100%;" minlength="1" required>
+                    <hr>
+                    <div class="is-flex is-justify-content-flex-start" style="margin-top: 20px;">
+                        <button type="submit" class="button is-info" style="margin-right: 10px;"><%=translation.CONFIRM%></button>
+                        <a class="button is-primary" href="/usuario/perfil?clang=<%= lang %>"><%=translation.BACK%></a>
+                    </div>
+                </div>
+            </form>
+            <% if (messages.err) { %>
+                <div class="alert alert-danger" role="alert" style="margin: 0 auto; width: 80%;">
+                    <p style="text-align: center; color: red;"><%= messages.err %></p>
+                </div>
+            <% } %>
+        </div>    
+    </section>
+    <% include partials/_footer %>
+</body>
